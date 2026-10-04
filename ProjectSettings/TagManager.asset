@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - FieldOfView
+  - Ryker
+  - Angel
+  - Wall
+  - SpawnPlatform
+  - SBBasic
+  - SBViewArea
+  - BoostPlatform
+  - DashRenewer
+  - Projectile
+  - StackedDashIndicator
+  - BaseDashIndicator
+  - AngelDashDirection
+  - SlowMoStamina
+  - SlowMoCountdown
+  - WalkalatorPlatform
+  - FlashingGate
+  - SBWithDestroyableProjectile
+  - WallDetectorCollider
+  - DialogueBar
+  - DialogueName
+  - DialogueText
+  - WallRykerBoundCollider
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - Player
+  - Spawn
+  - CameraBounds
+  - Projectiles
+  - Walls
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0

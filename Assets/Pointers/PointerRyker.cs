@@ -1,0 +1,77 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class PointerRyker : MonoBehaviour
+{
+    [SerializeField] private GameObject target;
+    [SerializeField] private GameObject origin;
+    [SerializeField] private float borderOffset = 20f;
+    private Vector3 targetPosition;
+    private Vector3 originPosition;
+    private Image image;
+
+    [Header("Child reference for hiding and showing")]
+    [SerializeField] private GameObject r;
+
+    //
+    // Set called from Ryker.cs
+    public void SetOrigin(GameObject origin)
+    {
+        this.origin = origin;
+    }
+
+    //
+    // Start is called before the first frame update
+    void Start()
+    {
+        image = GetComponent<Image>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        // Rotates the arrow to point towards the target
+        originPosition = origin.transform.position;
+        targetPosition = target.transform.position;
+        Vector3 direction = (targetPosition - originPosition).normalized;
+        float angle = GetAngleFromVectorFloat(direction);
+        transform.localEulerAngles = new Vector3(0, 0, angle);
+
+        // Check if target is off screen
+        Vector3 targetPositionScreenPoint = Camera.main.WorldToScreenPoint(targetPosition);
+        bool isOffScreen =  targetPositionScreenPoint.x <= borderOffset ||
+                            targetPositionScreenPoint.x >= Screen.width - borderOffset ||
+                            targetPositionScreenPoint.y <= borderOffset ||
+                            targetPositionScreenPoint.y >= Screen.height - borderOffset;
+        
+        if(isOffScreen)
+        {
+            // Adjust positioning if target is off screen
+            Vector3 cappedTargetScreenPosition = targetPositionScreenPoint;
+            // Show pointer on screen
+            image.enabled = true;
+            r.SetActive(true);
+            // Gigure pointer's position
+            if (cappedTargetScreenPosition.x <= borderOffset) cappedTargetScreenPosition.x = borderOffset;
+            if (cappedTargetScreenPosition.x >= Screen.width - borderOffset) cappedTargetScreenPosition.x = Screen.width - borderOffset;
+            if (cappedTargetScreenPosition.y <= borderOffset) cappedTargetScreenPosition.y = borderOffset;
+            if (cappedTargetScreenPosition.y >= Screen.height - borderOffset) cappedTargetScreenPosition.y = Screen.height - borderOffset;
+        
+            // Set the position of the arrow
+            transform.position = cappedTargetScreenPosition;
+        }else {
+            image.enabled = false;
+            r.SetActive(false);
+        }
+    }
+
+    public static float GetAngleFromVectorFloat(Vector3 dir) {
+        dir = dir.normalized;
+        float n = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        if (n < 0) n += 360;
+
+        return n;
+    }
+}
